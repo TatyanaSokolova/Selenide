@@ -32,4 +32,20 @@ public class AppCardDeliveryTest {
         $$("button").find(exactText("Забронировать")).click();
         $("[data-test-id='notification']").shouldHave(text("Встреча успешно забронирована на " + generateDate(3)), Duration.ofSeconds(15)).shouldBe(visible);
     }
+
+    @Test
+    void shouldGetSuccessAfterSubmissionOfTheFormWithListOfCitiesAndCalendar() {
+        $("[data-test-id='city'] .input__control").setValue("ка");
+        $$(".menu-item__control").find(exactText("Казань")).click();
+        $("[data-test-id='date'] .input__control").click();
+        int days = 14;
+        for (int i = 0; i < days; i++) {
+            $(".calendar").sendKeys(Keys.ARROW_RIGHT);
+        }
+        $("[data-test-id='name'] .input__control").setValue("Соколова-Романова Татьяна");
+        $("[data-test-id='phone'] .input__control").setValue("+79031884178");
+        $("[data-test-id='agreement']").click();
+        $$("button").find(exactText("Забронировать")).click();
+        $("[data-test-id='notification']").shouldHave(text("Встреча успешно забронирована на " + generateDate(17)), Duration.ofSeconds(15)).shouldBe(visible);
+    }
 }
